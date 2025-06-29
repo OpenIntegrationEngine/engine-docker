@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 
-ARG ALPINE_TAG
-ARG UBUNTU_TAG
+ARG BASE_IMAGE_TAG
 
 ARG OIE_RELEASE_VERSION
 
@@ -35,13 +34,11 @@ RUN rm -rf cli-lib manager-lib \
 
 RUN chown -R ${UID}:${GID} /opt/engine
 
-##########################################
-#
-#     Alpine Images
-#
-##########################################
 
-FROM eclipse-temurin:$ALPINE_TAG AS alpine
+##########################################
+#     Alpine based Images
+##########################################
+FROM eclipse-temurin:$BASE_IMAGE_TAG AS alpine
 
 ARG UID
 ARG GID
@@ -60,27 +57,23 @@ LABEL "org.opencontainers.image.authors"="The Open Integration Engine Project an
       "org.opencontainers.image.version"="${OIE_RELEASE_VERSION?:}"
 
 COPY --from=downloader /opt/engine /opt/engine
-
 RUN apk add --no-cache bash \
-    && adduser -D -H -u $UID engine engine # Create both group and user "engine" at the same time
+    && adduser -D -H -u $UID engine engine
 
 VOLUME /opt/engine/appdata
 VOLUME /opt/engine/custom-extensions
+
 WORKDIR /opt/engine
-
 EXPOSE 8443
-
 USER engine
+
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["./oieserver"]
 
 ##########################################
-#
-#     Ubuntu Image
-#
+#     Ubuntu based Images
 ##########################################
-
-FROM eclipse-temurin:$UBUNTU_TAG AS ubuntu
+FROM eclipse-temurin:$BASE_IMAGE_TAG AS ubuntu
 
 ARG UID
 ARG GID
@@ -99,16 +92,16 @@ LABEL "org.opencontainers.image.authors"="The Open Integration Engine Project an
       "org.opencontainers.image.version"="${OIE_RELEASE_VERSION?:}"
 
 COPY --from=downloader /opt/engine /opt/engine
-
 RUN groupadd --gid ${GID} engine \
     && useradd -u ${UID} -g ${GID} -M engine
 
 VOLUME /opt/engine/appdata
 VOLUME /opt/engine/custom-extensions
+
 WORKDIR /opt/engine
-
 EXPOSE 8443
-
 USER engine
+
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["./oieserver"]
+

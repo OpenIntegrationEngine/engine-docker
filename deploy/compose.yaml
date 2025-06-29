@@ -7,9 +7,8 @@ services:
       dockerfile: Dockerfile
       target: ubuntu
       context: .
-      args: &jdk-args
-        UBUNTU_TAG: ${UBUNTU_JDK_TAG:?}
-        ALPINE_TAG: ${ALPINE_JDK_TAG:?}
+      args:
+        BASE_IMAGE_TAG: ${UBUNTU_JDK_TAG:?}
         OIE_RELEASE_VERSION: ${OIE_RELEASE_VERSION:?}
         OIE_RELEASE_URL: ${OIE_RELEASE_URL:?}
       platforms: &platforms
@@ -25,9 +24,8 @@ services:
       dockerfile: Dockerfile
       target: ubuntu
       context: .
-      args: &jre-tags
-        UBUNTU_TAG: ${UBUNTU_JRE_TAG:?}
-        ALPINE_TAG: ${ALPINE_JRE_TAG:?}
+      args:
+        BASE_IMAGE_TAG: ${UBUNTU_JRE_TAG:?}
         OIE_RELEASE_VERSION: ${OIE_RELEASE_VERSION:?}
         OIE_RELEASE_URL: ${OIE_RELEASE_URL:?}
       platforms: *platforms
@@ -43,7 +41,10 @@ services:
       dockerfile: Dockerfile
       target: alpine
       context: .
-      args: *jdk-args
+      args:
+        BASE_IMAGE_TAG: ${ALPINE_JDK_TAG:?}
+        OIE_RELEASE_VERSION: ${OIE_RELEASE_VERSION:?}
+        OIE_RELEASE_URL: ${OIE_RELEASE_URL:?}
       platforms: *platforms
       tags:
         - openintegrationengine/engine:latest-alpine-jdk
@@ -55,7 +56,10 @@ services:
       dockerfile: Dockerfile
       target: alpine
       context: .
-      args: *jre-tags
+      args:
+        BASE_IMAGE_TAG: ${ALPINE_JRE_TAG:?}
+        OIE_RELEASE_VERSION: ${OIE_RELEASE_VERSION:?}
+        OIE_RELEASE_URL: ${OIE_RELEASE_URL:?}
       platforms: *platforms
       tags:
         - openintegrationengine/engine:latest
