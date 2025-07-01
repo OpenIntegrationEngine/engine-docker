@@ -57,7 +57,8 @@ LABEL "org.opencontainers.image.authors"="The Open Integration Engine Project an
       "org.opencontainers.image.version"="${OIE_RELEASE_VERSION?:}"
 
 COPY --from=downloader /opt/engine /opt/engine
-RUN apk add --no-cache bash \
+
+RUN apk add --no-cache bash unzip \
     && adduser -D -H -u $UID engine engine
 
 VOLUME /opt/engine/appdata
@@ -92,7 +93,11 @@ LABEL "org.opencontainers.image.authors"="The Open Integration Engine Project an
       "org.opencontainers.image.version"="${OIE_RELEASE_VERSION?:}"
 
 COPY --from=downloader /opt/engine /opt/engine
-RUN groupadd --gid ${GID} engine \
+
+RUN apt-get update \
+    && apt-get install -y unzip \
+    && rm -rf /var/lib/apt/lists/* \
+    && groupadd --gid ${GID} engine \
     && useradd -u ${UID} -g ${GID} -M engine
 
 VOLUME /opt/engine/appdata
