@@ -1,7 +1,6 @@
 name: Build production images
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -9,6 +8,7 @@ on:
 jobs:
   build-images:
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
