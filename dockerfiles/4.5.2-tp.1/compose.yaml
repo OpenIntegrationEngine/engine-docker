@@ -1,0 +1,68 @@
+################################################################
+#                                                              #
+#  WARNING: THIS FILE IS AUTO-GENERATED. DO NOT EDIT MANUALLY  #
+#                                                              #
+################################################################
+
+name: open-integration-engine
+
+services:
+    ubuntu-jre:
+      image: openintegrationengine/engine
+      build:
+        dockerfile: dockerfiles/4.5.2-tp.1/Dockerfile
+        target: ubuntu-jre
+        context: ../../
+        platforms:
+          - linux/amd64
+    #      - linux/arm64
+        tags:
+          - openintegrationengine/engine:4.5.2-tp.1-ubuntu
+          - openintegrationengine/engine:4.5.2-tp.1-ubuntu-jre
+          - openintegrationengine/engine:latest-ubuntu-jre
+          - openintegrationengine/engine:latest-ubuntu
+  
+    ubuntu-jdk:
+      image: openintegrationengine/engine
+      build:
+        dockerfile: dockerfiles/4.5.2-tp.1/Dockerfile
+        target: ubuntu-jdk
+        context: ../../
+        platforms:
+          - linux/amd64
+    #      - linux/arm64
+        tags:
+          - openintegrationengine/engine:4.5.2-tp.1-ubuntu
+          - openintegrationengine/engine:4.5.2-tp.1-ubuntu-jdk
+          - openintegrationengine/engine:latest-ubuntu-jdk
+  
+    alpine-jre:
+      image: openintegrationengine/engine
+      build:
+        dockerfile: dockerfiles/4.5.2-tp.1/Dockerfile
+        target: alpine-jre
+        context: ../../
+        platforms:
+          - linux/amd64
+    #      - linux/arm64
+        tags:
+          - openintegrationengine/engine:4.5.2-tp.1-alpine
+          - openintegrationengine/engine:4.5.2-tp.1-alpine-jre
+          - openintegrationengine/engine:latest-alpine-jre
+          - openintegrationengine/engine:latest-alpine
+          - openintegrationengine/engine:latest
+  
+    alpine-jdk:
+      image: openintegrationengine/engine
+      build:
+        dockerfile: dockerfiles/4.5.2-tp.1/Dockerfile
+        target: alpine-jdk
+        context: ../../
+        platforms:
+          - linux/amd64
+    #      - linux/arm64
+        tags:
+          - openintegrationengine/engine:4.5.2-tp.1-alpine
+          - openintegrationengine/engine:4.5.2-tp.1-alpine-jdk
+          - openintegrationengine/engine:latest-alpine-jdk
+  
