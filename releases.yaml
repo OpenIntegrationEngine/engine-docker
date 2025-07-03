@@ -1,0 +1,38 @@
+# Specifies which slug should gain the "latest" tags
+latest: 4.5.2-tp.1
+
+# Sets the alpine image tag for the downloader stage
+downloaderTag: 3.21.3
+
+uid: 1000
+gid: 1000
+
+# Add OCI best-practice labels https://github.com/opencontainers/image-spec/blob/main/annotations.md#pre-defined-annotation-keys
+labels: |-
+  "org.opencontainers.image.authors"="The Open Integration Engine Project and contributors" \
+  "org.opencontainers.image.created"="${CREATED_AT?:}" \
+  "org.opencontainers.image.description"="An open source fork of the now closed-source Mirth Connect" \
+  "org.opencontainers.image.licenses"="MPL-2.0" \
+  "org.opencontainers.image.source"="https://github.com/OpenIntegrationEngine/engine-docker" \
+  "org.opencontainers.image.title"="Open Integration Engine" \
+  "org.opencontainers.image.url"="https://github.com/OpenIntegrationEngine/engine" \
+  "org.opencontainers.image.vendor"="The Open Integration Engine Project" \
+  "org.opencontainers.image.version"="{{ .slug }}"
+
+versions:
+  - slug: 4.5.2-tp.1
+    releaseVersion: 4.5.2
+    releaseUrl: https://github.com/OpenIntegrationEngine/engine/releases/download/v4.5.2-tp.1/oie_unix_4_5_2.tar.gz
+    tags:
+      - distro: ubuntu
+        type: jre
+        tag: 17.0.15_6-jre-noble
+      - distro: ubuntu
+        type: jdk
+        tag: 17.0.15_6-jdk-noble
+      - distro: alpine
+        type: jre
+        tag: 17.0.15_6-jre-alpine
+      - distro: alpine
+        type: jdk
+        tag: 17.0.15_6-jdk-alpine
