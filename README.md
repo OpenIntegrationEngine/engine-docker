@@ -39,6 +39,16 @@ Please do your best to include the following information in your issue:
 * The output of the command you executed (Hint: add `--progress=plain` to your `docker` command to see the full output)
 * Use [Markdown](https://guides.github.com/features/mastering-markdown/) to format your issue text, ESPECIALLY if you are including code snippets or command output. This will make it easier for us to read and understand your issue.
 
+#### Upgrading from Mirth Connect
+
+Open Integration Engine can be upgraded from Mirth Connect 4.5.2. The following steps will connect Open Integration Engine to your existing Mirth Connect database, allowing you to continue using your existing channels, connectors, and other configurations.
+
+1. Update your Mirth Connect installation to Mirth Connect 4.5.2
+2. Backup your Mirth Connect database
+3. Stop your Mirth Connect server
+4. Update Open Integration Engine to use the same `vmoptions` and `mirth.properties` files as your Mirth Connect installation. Containerized instances will use environment variables to set these options. Other installations use the config files.
+5. Start Open Integration Engine, watch for errors in the console and `mirth.log`
+
 ------------
 
 <a name="what-is-oie"></a>
