@@ -28,8 +28,6 @@ COPY --chmod=755 entrypoint.sh /opt/engine/entrypoint.sh
 
 RUN rm -rf cli-lib manager-lib \
     && rm mirth-cli-launcher.jar oiecommand
-
-RUN chown -R 1000:1000 /opt/engine
 FROM eclipse-temurin:17.0.15_6-jre-noble AS ubuntu-jre
 
 ARG CREATED_AT
@@ -45,7 +43,7 @@ LABEL \
   "org.opencontainers.image.vendor"="The Open Integration Engine Project" \
   "org.opencontainers.image.version"="4.5.2-tp.1"
 
-COPY --from=downloader /opt/engine /opt/engine
+COPY --from=downloader --chown=1000:1000 /opt/engine /opt/engine
 
 RUN apt-get update \
     && apt-get install -y unzip \
@@ -79,7 +77,7 @@ LABEL \
   "org.opencontainers.image.vendor"="The Open Integration Engine Project" \
   "org.opencontainers.image.version"="4.5.2-tp.1"
 
-COPY --from=downloader /opt/engine /opt/engine
+COPY --from=downloader --chown=1000:1000 /opt/engine /opt/engine
 
 RUN apt-get update \
     && apt-get install -y unzip \
@@ -113,7 +111,7 @@ LABEL \
   "org.opencontainers.image.vendor"="The Open Integration Engine Project" \
   "org.opencontainers.image.version"="4.5.2-tp.1"
 
-COPY --from=downloader /opt/engine /opt/engine
+COPY --from=downloader --chown=1000:1000 /opt/engine /opt/engine
 
 RUN apk add --no-cache bash unzip \
     && adduser -D -H -u 1000 engine engine
@@ -143,7 +141,7 @@ LABEL \
   "org.opencontainers.image.vendor"="The Open Integration Engine Project" \
   "org.opencontainers.image.version"="4.5.2-tp.1"
 
-COPY --from=downloader /opt/engine /opt/engine
+COPY --from=downloader --chown=1000:1000 /opt/engine /opt/engine
 
 RUN apk add --no-cache bash unzip \
     && adduser -D -H -u 1000 engine engine

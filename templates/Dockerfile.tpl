@@ -44,8 +44,6 @@ COPY --chmod=755 entrypoint.sh /opt/engine/entrypoint.sh
 RUN rm -rf cli-lib manager-lib \
     && rm mirth-cli-launcher.jar oiecommand
 
-RUN chown -R {{ $.config.uid }}:{{ $.config.gid }} /opt/engine
-
 {{- /* Assign current version slug into a variable to carry it into the tags iteration */}}
 {{- $slug := dict "slug" .version.slug -}}
 {{/* Iterate version tags to generate the final stages */}}
@@ -58,7 +56,7 @@ LABEL \
 {{/* Render the Labels section to include the slug */}}
 {{- tpl $.config.labels $slug | strings.Indent 2 }}
 
-COPY --from=downloader /opt/engine /opt/engine
+COPY --from=downloader --chown={{ $.config.uid }}:{{ $.config.gid }} /opt/engine /opt/engine
 {{ if eq .distro "ubuntu" }}
 RUN apt-get update \
     && apt-get install -y unzip \
