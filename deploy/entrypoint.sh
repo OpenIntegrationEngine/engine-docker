@@ -141,7 +141,9 @@ if ! [ -z "${VMOPTIONS+x}" ]; then
 
     for vmoption in "${vmoptions[@]}"
     do
-        echo "${vmoption}" >> "$APP_DIR/oieserver.vmoptions"
+        if ! grep -Fqsx -- "${vmoption}" "$APP_DIR/oieserver.vmoptions"; then
+            echo "${vmoption}" >> "$APP_DIR/oieserver.vmoptions"
+        fi
     done
 fi
 
