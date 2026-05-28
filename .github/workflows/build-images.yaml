@@ -1,0 +1,63 @@
+name: build-images.yaml
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validate-yaml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Check for duplicate slugs
+        working-directory: deploy
+        run: yq '.versions | map(.slug) | group_by(.) | map(select(length > 1) | .[0])' releases.yaml
+
+  get-gomplate:
+    runs-on: ubuntu-latest
+    env:
+      GOMPLATE_VERSION: 4.3.2
+      GOMPLATE_SHA512: ed77ea781cc2b63fbb325dbb29bbe3041f5158ccaec555fdc79b6ecca1b4c48fb6be2fee6612469c715b77fb9179be6e263ee1d58773232dfc346249afe660ab
+      GOMPLATE_DIR: ${{ github.workspace }}/.cache/gomplate
+      GOMPLATE_BIN: ${{ github.workspace }}/.cache/gomplate/gomplate
+    steps:
+      - name: Cache gomplate binary
+        id: cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.GOMPLATE_DIR }}
+          key: |
+            gomplate-${{ env.GOMPLATE_VERSION }}-${{ env.GOMPLATE_SHA512 }}
+          restore-keys: |
+            gomplate-${{ env.GOMPLATE_VERSION }}-
+
+      - name: Download gomplate
+        if: steps.cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          mkdir -p "${GOMPLATE_DIR}"
+          curl -fsSL --output "${GOMPLATE_BIN}" "https://github.com/hairyhenderson/gomplate/releases/download/v$GOMPLATE_VERSION/gomplate_linux-amd64"
+          echo "${{ env.GOMPLATE_SHA512 }} ${GOMPLATE_BIN}" | sha512sum --check --status
+          chmod +x "${GOMPLATE_BIN}"
+
+      # 4. Put gomplate on PATH for the rest of the job.
+      - name: Add gomplate to PATH
+        shell: bash
+        run: echo "${GOMPLATE_DIR}" >> "${GITHUB_PATH}"
+
+      # Example: prove it works
+      - name: Show gomplate version
+        run: gomplate --version
+
+  render-dockerfiles:
+    runs-on: ubuntu-latest
+    needs:
+      - validate-yaml
+      - get-gomplate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Render Dockerfiles
+        run: ./render_docker_images.sh
