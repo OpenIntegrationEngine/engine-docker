@@ -173,4 +173,65 @@ if [ -f /run/secrets/oieserver_vmoptions ]; then
     (cat /run/secrets/oieserver_vmoptions ; echo "") >> "$APP_DIR/oieserver.vmoptions"
 fi
 
+ download jars from this url "$CUSTOM_JARS_DOWNLOAD", set by user
+if ! [ -z "${CUSTOM_JARS_DOWNLOAD+x}" ]; then
+	echo "Downloading Jars at ${CUSTOM_JARS_DOWNLOAD}"
+	if ! [ -z "${ALLOW_INSECURE}" ] && [ "${ALLOW_INSECURE}" == "true" ]; then
+		curl -ksSLf "${CUSTOM_JARS_DOWNLOAD}" -o userJars.zip || echo "problem with custom jars download"
+	else
+		curl -sSLf "${CUSTOM_JARS_DOWNLOAD}" -o userJars.zip || echo "problem with custom jars download"
+	fi
+
+	# Unzipping contents of userJars.zip into /opt/engine/server-launcher-lib folder
+	if [ -e "userJars.zip" ]; then
+		echo "Unzipping contents of userJars.zip into $APP_DIR/server-launcher-lib"
+		unzip userJars.zip -d "$APP_DIR/server-launcher-lib"
+		# removing the downloaded zip file
+		rm userJars.zip
+	fi
+fi
+
+# download extensions from this url "$EXTENSIONS_DOWNLOAD", set by user
+if ! [ -z "${EXTENSIONS_DOWNLOAD+x}" ]; then
+	echo "Downloading extensions at ${EXTENSIONS_DOWNLOAD}"
+	if ! [ -z "${ALLOW_INSECURE}" ] && [ "${ALLOW_INSECURE}" == "true" ]; then
+		curl -ksSLf "${EXTENSIONS_DOWNLOAD}" -o  userExtensions.zip || echo "problem with extensions download"
+	else
+		curl -sSLf "${EXTENSIONS_DOWNLOAD}" -o userExtensions.zip || echo "problem with extensions download"
+	fi
+
+	# Unzipping contents of userExtensions.zip
+	if [ -e "userExtensions.zip" ]; then
+		echo "Unzipping contents of userExtensions.zip"
+		mkdir /tmp/userextensions
+		unzip userExtensions.zip -d /tmp/userextensions
+		# removing the downloaded zip file
+		rm userExtensions.zip
+
+		# Unzipping contents of individual extension zip files into /opt/engine/extensions folder
+		zipFileCount=`ls -1 /tmp/userextensions/*.zip 2>/dev/null | wc -l`
+		if [ $zipFileCount != 0 ]; then
+			echo "Unzipping contents of /tmp/userextensions/ zips into $APP_DIR/extensions"
+			for f in /tmp/userextensions/*.zip; do unzip "$f" -d "$APP_DIR/extensions"; done
+		fi
+		# removing the tmp folder
+		rm -rf /tmp/userextensions
+	fi
+fi
+
+# download keystore
+if ! [ -z "${KEYSTORE_DOWNLOAD+x}" ]; then
+	echo "Downloading keystore at ${KEYSTORE_DOWNLOAD}"
+	if ! [ -z "${ALLOW_INSECURE}" ] && [ "${ALLOW_INSECURE}" == "true" ]; then
+		curl -ksSLf "${KEYSTORE_DOWNLOAD}" -o "$APP_DIR/appdata/keystore.jks" || echo "problem with keystore download"
+	else
+		curl -sSLf "${KEYSTORE_DOWNLOAD}" -o "$APP_DIR/appdata/keystore.jks" || echo "problem with keystore download"
+	fi
+fi
+
+# if delay is set as an environment variable then wait that long in seconds
+if ! [ -z "${DELAY+x}" ]; then
+	sleep $DELAY
+fi
+
 exec "$@"
