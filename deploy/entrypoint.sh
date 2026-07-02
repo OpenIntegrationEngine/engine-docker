@@ -173,7 +173,7 @@ if [ -f /run/secrets/oieserver_vmoptions ]; then
     (cat /run/secrets/oieserver_vmoptions ; echo "") >> "$APP_DIR/oieserver.vmoptions"
 fi
 
- download jars from this url "$CUSTOM_JARS_DOWNLOAD", set by user
+# download jars from this url "$CUSTOM_JARS_DOWNLOAD", set by user
 if ! [ -z "${CUSTOM_JARS_DOWNLOAD+x}" ]; then
 	echo "Downloading Jars at ${CUSTOM_JARS_DOWNLOAD}"
 	if ! [ -z "${ALLOW_INSECURE}" ] && [ "${ALLOW_INSECURE}" == "true" ]; then
