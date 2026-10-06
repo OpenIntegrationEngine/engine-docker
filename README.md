@@ -57,16 +57,29 @@ for building, deploying, and managing interfaces, along with powerful features f
 <a name="supported-tags"></a>
 # Supported Images [↑](#top)
 
-All Open Integration Engine releases are packaged into the four following images:
+All Open Integration Engine releases are packaged into the following images:
 
-- `latest`, `latest-alpine`, `latest-alpine-jre`
-    - `4.5.2-tp.1-alpine`, `4.5.2-tp.1-alpine-jre`
-- `latest-alpine-jdk`
-    - `4.5.2-tp.1-alpine-jdk`
-- `latest-ubuntu`, `latest-ubuntu-jre`
-    - `4.5.2-tp.1-ubuntu`, `4.5.2-tp.1-ubuntu-jre`
-- `latest-ubuntu-jdk`
-    - `4.5.2-tp.1-ubuntu-jdk`
+### Version 4.6.0 _(latest)_
+- **Alpine**: `4.6.0-alpine-jre` (also `4.6.0-alpine`), `4.6.0-alpine-jdk`
+- **Ubuntu**: `4.6.0-ubuntu-jre` (also `4.6.0-ubuntu`), `4.6.0-ubuntu-jdk`
+
+### Version 4.5.2
+- **Alpine**: `4.5.2-alpine-jre` (also `4.5.2-alpine`), `4.5.2-alpine-jdk`
+- **Ubuntu**: `4.5.2-ubuntu-jre` (also `4.5.2-ubuntu`), `4.5.2-ubuntu-jdk`
+
+---
+### Floating Tags
+
+- **Default**:
+    - `latest` → `4.6.0-alpine-jre`
+- **Distro Only**:
+    - `latest-alpine` → `4.6.0-alpine-jre`
+    - `latest-ubuntu` → `4.6.0-ubuntu-jre`
+- **Distro + JVM**:
+    - `latest-alpine-jre` → `4.6.0-alpine-jre`
+    - `latest-alpine-jdk` → `4.6.0-alpine-jdk`
+    - `latest-ubuntu-jre` → `4.6.0-ubuntu-jre`
+    - `latest-ubuntu-jdk` → `4.6.0-ubuntu-jdk`
 
 ------------
 

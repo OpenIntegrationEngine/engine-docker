@@ -18,8 +18,6 @@ services:
       tags:
         - openintegrationengine/engine:4.5.2-ubuntu
         - openintegrationengine/engine:4.5.2-ubuntu-jre
-        - openintegrationengine/engine:latest-ubuntu-jre
-        - openintegrationengine/engine:latest-ubuntu
 
   ubuntu-jdk:
     image: openintegrationengine/engine
@@ -31,7 +29,6 @@ services:
         - linux/arm64
       tags:
         - openintegrationengine/engine:4.5.2-ubuntu-jdk
-        - openintegrationengine/engine:latest-ubuntu-jdk
 
   alpine-jre:
     image: openintegrationengine/engine
@@ -44,9 +41,6 @@ services:
       tags:
         - openintegrationengine/engine:4.5.2-alpine
         - openintegrationengine/engine:4.5.2-alpine-jre
-        - openintegrationengine/engine:latest-alpine-jre
-        - openintegrationengine/engine:latest-alpine
-        - openintegrationengine/engine:latest
 
   alpine-jdk:
     image: openintegrationengine/engine
@@ -58,4 +52,3 @@ services:
         - linux/arm64
       tags:
         - openintegrationengine/engine:4.5.2-alpine-jdk
-        - openintegrationengine/engine:latest-alpine-jdk
