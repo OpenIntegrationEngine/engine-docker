@@ -441,7 +441,7 @@ Example:
 
 ## Building images
 
-To build the full set of four images (`ubuntu-jre`, `ubuntu-jdk`, `alpine-jre`, and `alpine-jdk`) run the following command in the `deploy/` directory:
+To build the full set of four images (`ubuntu-jre`, `ubuntu-jdk`, `alpine-jre`, and `alpine-jdk`) run the following command in the `dockerfiles/<version>/` directory:
 ```sh
 docker compose build --build-arg CREATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 ```
