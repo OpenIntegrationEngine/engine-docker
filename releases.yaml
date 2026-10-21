@@ -28,16 +28,16 @@ versions:
     tags:
       - distro: ubuntu
         type: jre
-        tag: 21.0.11_10-jre-resolute
+        tag: 21.0.12.1_1-jre-resolute
       - distro: ubuntu
         type: jdk
-        tag: 21.0.11_10-jdk-resolute
+        tag: 21.0.12.1_1-jdk-resolute
       - distro: alpine
         type: jre
-        tag: 21.0.11_10-jre-alpine
+        tag: 21.0.12.1_1-jre-alpine
       - distro: alpine
         type: jdk
-        tag: 21.0.11_10-jdk-alpine
+        tag: 21.0.12.1_1-jdk-alpine
 
   - slug: 4.5.2
     releaseVersion: 4.5.2

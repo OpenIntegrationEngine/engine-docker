@@ -29,7 +29,7 @@ COPY --chmod=755 entrypoint.sh /opt/engine/entrypoint.sh
 RUN rm -rf cli-lib manager-lib \
     && rm mirth-cli-launcher.jar oiecommand
 
-FROM eclipse-temurin:21.0.11_10-jre-resolute AS ubuntu-jre
+FROM eclipse-temurin:21.0.12.1_1-jre-resolute AS ubuntu-jre
 
 ARG CREATED_AT
 
@@ -63,7 +63,7 @@ USER engine
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["./oieserver"]
 
-FROM eclipse-temurin:21.0.11_10-jdk-resolute AS ubuntu-jdk
+FROM eclipse-temurin:21.0.12.1_1-jdk-resolute AS ubuntu-jdk
 
 ARG CREATED_AT
 
@@ -97,7 +97,7 @@ USER engine
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["./oieserver"]
 
-FROM eclipse-temurin:21.0.11_10-jre-alpine AS alpine-jre
+FROM eclipse-temurin:21.0.12.1_1-jre-alpine AS alpine-jre
 
 ARG CREATED_AT
 
@@ -127,7 +127,7 @@ USER engine
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["./oieserver"]
 
-FROM eclipse-temurin:21.0.11_10-jdk-alpine AS alpine-jdk
+FROM eclipse-temurin:21.0.12.1_1-jdk-alpine AS alpine-jdk
 
 ARG CREATED_AT
 
