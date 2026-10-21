@@ -62,7 +62,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && groupmod --new-name engine ubuntu \
     && usermod -l engine ubuntu \
-    && usermod -aG engine engine
+    && usermod -G '' engine
 {{- else if eq .distro "alpine" }}
 RUN apk add --no-cache bash unzip \
     && adduser -D -H -u {{ $.config.uid }} engine engine

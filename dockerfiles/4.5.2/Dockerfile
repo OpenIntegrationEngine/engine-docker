@@ -51,7 +51,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && groupmod --new-name engine ubuntu \
     && usermod -l engine ubuntu \
-    && usermod -aG engine engine
+    && usermod -G '' engine
 
 VOLUME /opt/engine/appdata
 VOLUME /opt/engine/custom-extensions
@@ -85,7 +85,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && groupmod --new-name engine ubuntu \
     && usermod -l engine ubuntu \
-    && usermod -aG engine engine
+    && usermod -G '' engine
 
 VOLUME /opt/engine/appdata
 VOLUME /opt/engine/custom-extensions
