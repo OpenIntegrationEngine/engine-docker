@@ -11,15 +11,26 @@ on:
 concurrency: build-images
 
 jobs:
+  list-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.versions.outputs.versions }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Read version slugs from releases.yaml
+        id: versions
+        run: echo "versions=$(yq -o=json -I=0 '[.versions[].slug]' releases.yaml)" >> "$GITHUB_OUTPUT"
+
   build-images:
+    needs: list-versions
     runs-on: ubuntu-latest
     environment: dockerhub
     strategy:
       fail-fast: false
       matrix:
-        oie_version:
-          - 4.5.2
-          - 4.6.0
+        oie_version: ${{ fromJSON(needs.list-versions.outputs.versions) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
